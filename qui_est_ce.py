@@ -26,7 +26,12 @@ def affichage(tab):
 
 def qui_est_ce():
     """Lance la boucle de jeu du Qui est-ce ?
+    Retourne
+    --------
+    gagnant : int
+        le gagnant de la partie
     """
+    gagnant = None
     persos = open("personnages.csv")
     tab = list(csv.DictReader(persos)) # les infos des personnages
 
@@ -68,6 +73,7 @@ def qui_est_ce():
             if perso2["prenom"] == caractere:
                 # si j1 entre le bon prénom = il a deviné le perso de j2
                 print("Bravo, Joueur 1 a gagné, c'est : ", perso2["prenom"])
+                gagnant = 1
                 break
 
             if perso2[categorie] != caractere:
@@ -77,8 +83,10 @@ def qui_est_ce():
                         print("On élimine",personnage["prenom"])
                         elimines1.append(personnage["prenom"])
                 restants1 = [personnage for personnage in tab if personnage["prenom"] not in elimines1]
+                """
                 print("Il reste : ")
                 affichage(restants1)
+                """
 
             elif perso2[categorie] == caractere:
                 print("Le personnage recherché a cette caractéristique, d'autres ne correspondent donc pas : ")
@@ -87,13 +95,16 @@ def qui_est_ce():
                         print("On élimine",personnage["prenom"])
                         elimines1.append(personnage["prenom"])
                 restants1 = [personnage for personnage in tab if personnage["prenom"] not in elimines1]
+                """
                 print("Il reste:")
                 affichage(restants1)
+                """
 
         if len(restants1) == 1:
             time.sleep(2)
             espace (21)
             print("Bravo, Joueur 1 a gagné, c'est : ", perso2["prenom"])
+            gagnant = 1
             break
 
         time.sleep(4)
@@ -112,7 +123,8 @@ def qui_est_ce():
             # (bleus pour les yeux,...)
 
             if perso1["prenom"] == caractere:
-                print("Bravo, c'est : ", perso1["prenom"])
+                print("Bravo, Joueur 2 a gagné c'est : ", perso1["prenom"])
+                gagnant = 2
                 break
 
             if perso1[categorie] != caractere:
@@ -122,8 +134,10 @@ def qui_est_ce():
                         print("On élimine",personnage["prenom"])
                         elimines2.append(personnage["prenom"])
                 restants2 = [personnage for personnage in tab if personnage["prenom"] not in elimines2]
+                """
                 print("Il reste: ")
                 affichage(restants2)
+                """
 
             elif perso1[categorie] == caractere:
                 print("Le personnage recherché a cette caractéristique, d'autres ne correspondent donc pas : ")
@@ -132,14 +146,20 @@ def qui_est_ce():
                         print("On élimine",personnage["prenom"])
                         elimines2.append(personnage["prenom"])
                 restants2 = [personnage for personnage in tab if personnage["prenom"] not in elimines2]
+                """
                 print("Il reste:")
                 affichage(restants2)
+                """
 
         if len(restants2) == 1:
             time.sleep(2)
             espace (21)
             print("Bravo, Joueur 2 a gagné, c'est : ", perso1["prenom"])
+            gagnant = 2
             break
 
         time.sleep(4)
         espace(42)
+        #print(gagnant)
+    return gagnant
+
